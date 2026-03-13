@@ -1,12 +1,12 @@
 /**
  * Variables Configuration
  * =======================
- * 
+ *
  * CENTRAL PLACE TO DEFINE ALL SHARED VARIABLES
- * 
+ *
  * This file defines all variables that can be shared across sections.
  * AI agents should read this file to understand what variables are available.
- * 
+ *
  * USAGE:
  * 1. Define variables here with their default values and metadata
  * 2. Use them in any section with: const x = useVar('variableName', defaultValue)
@@ -55,106 +55,229 @@ export interface VariableDefinition {
  * =====================================================
  * 🎯 DEFINE YOUR VARIABLES HERE
  * =====================================================
- * 
- * SUPPORTED TYPES:
- * 
- * 1. NUMBER (slider):
- *    { defaultValue: 5, type: 'number', min: 0, max: 10, step: 1 }
- * 
- * 2. TEXT (free text):
- *    { defaultValue: 'Hello', type: 'text', placeholder: 'Enter text...' }
- * 
- * 3. SELECT (dropdown):
- *    { defaultValue: 'sine', type: 'select', options: ['sine', 'cosine', 'tangent'] }
- * 
- * 4. BOOLEAN (toggle):
- *    { defaultValue: true, type: 'boolean' }
- * 
- * 5. ARRAY (list of numbers):
- *    { defaultValue: [1, 2, 3], type: 'array' }
- * 
- * 6. OBJECT (complex data):
- *    { defaultValue: { x: 5, y: 10 }, type: 'object', schema: '{ x: number, y: number }' }
  */
 export const variableDefinitions: Record<string, VariableDefinition> = {
     // ========================================
-    // ADD YOUR VARIABLES HERE
+    // SECTION 1: What is an Equation?
     // ========================================
 
-    // Uncomment and modify these examples for your lesson:
-
-    /*
-    // ─────────────────────────────────────────
-    // NUMBER - Use with sliders
-    // ─────────────────────────────────────────
-    myValue: {
+    // Left side of equation for balance visualization
+    leftSideValue: {
         defaultValue: 5,
         type: 'number',
-        label: 'My Value',
-        description: 'A number that controls something',
-        unit: 'm',           // optional unit display
+        label: 'Left Side Value',
+        description: 'The value on the left side of the equation',
         min: 0,
-        max: 10,
-        step: 0.5,
+        max: 20,
+        step: 1,
+        color: '#62D0AD',
     },
 
-    // ─────────────────────────────────────────
-    // TEXT - Free text input
-    // ─────────────────────────────────────────
-    lessonTitle: {
-        defaultValue: 'My Lesson',
+    // Right side of equation for balance visualization
+    rightSideValue: {
+        defaultValue: 5,
+        type: 'number',
+        label: 'Right Side Value',
+        description: 'The value on the right side of the equation',
+        min: 0,
+        max: 20,
+        step: 1,
+        color: '#8E90F5',
+    },
+
+    // Question: What makes an equation?
+    answerEquationDefinition: {
+        defaultValue: '',
         type: 'text',
-        label: 'Lesson Title',
-        description: 'The title of your lesson',
-        placeholder: 'Enter a title...',
+        label: 'Equation Definition Answer',
+        description: 'Student answer for what makes an equation',
+        placeholder: '???',
+        correctAnswer: 'equal',
+        color: '#F7B23B',
     },
 
-    // ─────────────────────────────────────────
-    // SELECT - Dropdown with options
-    // ─────────────────────────────────────────
-    difficulty: {
-        defaultValue: 'medium',
+    // ========================================
+    // SECTION 2: Parts of an Equation
+    // ========================================
+
+    // Variable highlight for parts exploration
+    activeEquationPart: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Active Equation Part',
+        description: 'Currently highlighted part of the equation',
+        color: '#8E90F5',
+        bgColor: 'rgba(142, 144, 245, 0.15)',
+    },
+
+    // Coefficient value for demonstration
+    coefficientValue: {
+        defaultValue: 2,
+        type: 'number',
+        label: 'Coefficient',
+        description: 'The number multiplying the variable',
+        min: 1,
+        max: 10,
+        step: 1,
+        color: '#AC8BF9',
+    },
+
+    // Constant value for demonstration
+    constantValue: {
+        defaultValue: 5,
+        type: 'number',
+        label: 'Constant',
+        description: 'The constant term in the equation',
+        min: 1,
+        max: 15,
+        step: 1,
+        color: '#F7B23B',
+    },
+
+    // Question: Identify the variable
+    answerIdentifyVariable: {
+        defaultValue: '',
         type: 'select',
-        label: 'Difficulty',
-        description: 'The difficulty level of the lesson',
-        options: ['easy', 'medium', 'hard', 'expert'],
+        label: 'Identify Variable Answer',
+        description: 'Student answer for identifying the variable',
+        placeholder: '???',
+        correctAnswer: 'x',
+        options: ['2', 'x', '5', '11'],
+        color: '#62D0AD',
     },
 
-    // ─────────────────────────────────────────
-    // BOOLEAN - Toggle switch
-    // ─────────────────────────────────────────
-    showHints: {
-        defaultValue: true,
-        type: 'boolean',
-        label: 'Show Hints',
-        description: 'Toggle to show or hide hints',
+    // Question: Identify the coefficient
+    answerIdentifyCoefficient: {
+        defaultValue: '',
+        type: 'select',
+        label: 'Identify Coefficient Answer',
+        description: 'Student answer for identifying the coefficient',
+        placeholder: '???',
+        correctAnswer: '2',
+        options: ['2', 'x', '5', '11'],
+        color: '#AC8BF9',
     },
 
-    // ─────────────────────────────────────────
-    // ARRAY - List of numbers
-    // ─────────────────────────────────────────
-    dataPoints: {
-        defaultValue: [1, 4, 9, 16, 25],
-        type: 'array',
-        label: 'Data Points',
-        description: 'Y-values for plotting a graph',
+    // ========================================
+    // SECTION 3: Solving One-Step Equations
+    // ========================================
+
+    // Addition equation: x + ? = ?
+    additionUnknown: {
+        defaultValue: 3,
+        type: 'number',
+        label: 'Addition Unknown',
+        description: 'The number being added to x',
+        min: 1,
+        max: 10,
+        step: 1,
+        color: '#62D0AD',
     },
 
-    // ─────────────────────────────────────────
-    // OBJECT - Complex structured data
-    // ─────────────────────────────────────────
-    graphSettings: {
-        defaultValue: { 
-            xMin: -10, 
-            xMax: 10, 
-            showGrid: true 
-        },
-        type: 'object',
-        label: 'Graph Settings',
-        description: 'Configuration for the graph display',
-        schema: '{ xMin: number, xMax: number, showGrid: boolean }',
+    additionResult: {
+        defaultValue: 7,
+        type: 'number',
+        label: 'Addition Result',
+        description: 'The result of the addition equation',
+        min: 2,
+        max: 20,
+        step: 1,
+        color: '#8E90F5',
     },
-    */
+
+    // Multiplication equation: ? × x = ?
+    multiplicationCoefficient: {
+        defaultValue: 2,
+        type: 'number',
+        label: 'Multiplication Coefficient',
+        description: 'The coefficient multiplying x',
+        min: 2,
+        max: 10,
+        step: 1,
+        color: '#AC8BF9',
+    },
+
+    multiplicationResult: {
+        defaultValue: 10,
+        type: 'number',
+        label: 'Multiplication Result',
+        description: 'The result of the multiplication equation',
+        min: 4,
+        max: 50,
+        step: 2,
+        color: '#F7B23B',
+    },
+
+    // Answer for solving addition equation
+    answerSolveAddition: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Solve Addition Answer',
+        description: 'Student answer for solving x + 3 = 7',
+        placeholder: '???',
+        correctAnswer: '4',
+        color: '#22c55e',
+    },
+
+    // Answer for solving multiplication equation
+    answerSolveMultiplication: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Solve Multiplication Answer',
+        description: 'Student answer for solving 2x = 10',
+        placeholder: '???',
+        correctAnswer: '5',
+        color: '#22c55e',
+    },
+
+    // ========================================
+    // SECTION 4: Practice & Check Understanding
+    // ========================================
+
+    // Practice question 1: x + 8 = 12
+    answerPracticeOne: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Practice 1 Answer',
+        description: 'Student answer for x + 8 = 12',
+        placeholder: '???',
+        correctAnswer: '4',
+        color: '#62D0AD',
+    },
+
+    // Practice question 2: 3x = 15
+    answerPracticeTwo: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Practice 2 Answer',
+        description: 'Student answer for 3x = 15',
+        placeholder: '???',
+        correctAnswer: '5',
+        color: '#8E90F5',
+    },
+
+    // Practice question 3: y - 6 = 10
+    answerPracticeThree: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Practice 3 Answer',
+        description: 'Student answer for y - 6 = 10',
+        placeholder: '???',
+        correctAnswer: '16',
+        color: '#AC8BF9',
+    },
+
+    // Conceptual question: what operation to undo addition
+    answerUndoOperation: {
+        defaultValue: '',
+        type: 'select',
+        label: 'Undo Operation Answer',
+        description: 'Student answer for which operation undoes addition',
+        placeholder: '???',
+        correctAnswer: 'subtraction',
+        options: ['addition', 'subtraction', 'multiplication', 'division'],
+        color: '#F7B23B',
+    },
 };
 
 /**
